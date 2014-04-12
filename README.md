@@ -1,4 +1,5 @@
-> Rich Text Editor in PHP
+Rich Text Editor in PHP
+=============
 
 Project to integrate Tiny MCE editor with Elfinder file explorer.
 
