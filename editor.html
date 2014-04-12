@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>Rich Text Editor</title>
+		<!-- required scripts -->
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+		<script src="vendor/tiny_mce/tiny_mce.js"></script>
+	    <script src="vendor/elfinder/js/elfinder.min.js"></script>
+	    <script>
+			/**
+			 * Script to setup the Tiny MCE editor and the callback to Elfinder file explorer
+			 */
+			function elFinderBrowser(fieldName, url, type, win) {
+				tinymce.activeEditor.windowManager.open({
+					file: '../../../../../php-rich-text-editor/elfinder_explorer.html', // url to page of Elfinder Explorer
+					title: 'Image',
+					width: 900,
+					height: 450,
+					resizable: 'yes'
+				}, {
+					setUrl: function (url) {
+						win.document.getElementById(fieldName).value = url; // set the returned URL of selected file
+					},
+			        window : win,
+			        input : fieldName
+				});
+				return false;
+			}
+
+			$(document).ready(function(){	
+			    tinyMCE.init({
+					// General options
+			        mode : "textareas",
+			        theme : "advanced",
+			        elements : "content",
+			        plugins : "autolink,lists,spellchecker,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template",
+			        // Theme options
+			        theme_advanced_buttons1 : "save,newdocument,|,bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,styleselect,formatselect,fontselect,fontsizeselect",
+			        theme_advanced_buttons2 : "cut,copy,paste,pastetext,pasteword,|,search,replace,|,bullist,numlist,|,outdent,indent,blockquote,|,undo,redo,|,link,unlink,anchor,image,cleanup,help,code,|,insertdate,inserttime,preview,|,forecolor,backcolor",
+			        theme_advanced_buttons3 : "tablecontrols,|,hr,removeformat,visualaid,|,sub,sup,|,charmap,emotions,iespell,media,advhr,|,print,|,ltr,rtl,|,fullscreen",
+			        theme_advanced_buttons4 : "insertlayer,moveforward,movebackward,absolute,|,styleprops,spellchecker,|,cite,abbr,acronym,del,ins,attribs,|,visualchars,nonbreaking,template,blockquote,pagebreak,|,insertfile,insertimage",
+			        theme_advanced_toolbar_location : "top",
+			        theme_advanced_toolbar_align : "left",
+			        theme_advanced_statusbar_location : "bottom",
+			        theme_advanced_resizing : true,
+			        file_browser_callback: "elFinderBrowser", // the function to callback when a file is selected     
+			        // Skin options
+			        skin : "o2k7",
+			        skin_variant : "silver"
+			    });	
+			});
+</script>
+	</head>
+	<body>
+		<div style="width:80%;padding:50px;">
+		    <textarea id="elm1" name="elm1" rows="30" cols="60" style="width: 80%; height: 500px;"  class="textEditor"></textarea>
+	    </div>
+	</body>
+</html>

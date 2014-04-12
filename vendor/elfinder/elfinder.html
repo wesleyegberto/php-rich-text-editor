@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>Elfinder File Explorer</title>
+
+		<!-- jQuery and jQuery UI (REQUIRED) -->
+		<link rel="stylesheet" type="text/css" media="screen" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/themes/smoothness/jquery-ui.css">
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
+		<link rel="stylesheet" type="text/css" media="screen" href="css/elfinder.min.css">
+		<link rel="stylesheet" type="text/css" media="screen" href="css/theme.css">
+		
+		<script type="text/javascript" src="js/elfinder.min.js"></script>
+		<!-- Script Tiny MCE to integrate with Elfinder (allows to return the name and url of file selected) -->
+        <script type="text/javascript" src="../../js/tiny_mce/tiny_mce_popup.js"></script>
+  
+		<script type="text/javascript">
+			var FileBrowserDialogue = {
+				init: function() {
+				  // Here goes your code for setting your custom things onLoad.
+				},
+				mySubmit: function (URL) {
+                    // This arg is sent by caller
+					var win = tinyMCEPopup.getWindowArg('window');
+					// pass selected file path to TinyMCE
+					win.document.getElementById(tinyMCEPopup.getWindowArg('input')).value = URL;
+					// are we an image browser?
+					if (typeof(win.ImageDialog) != 'undefined') {
+						// update image dimensions
+						if (win.ImageDialog.getImageData) {
+							win.ImageDialog.getImageData();
+						}
+						// update preview if necessary
+						if (win.ImageDialog.showPreviewImage) {
+							win.ImageDialog.showPreviewImage(URL);
+						}
+					}
+					tinyMCEPopup.close();
+				}
+			}
+
+			tinyMCEPopup.onInit.add(FileBrowserDialogue.init, FileBrowserDialogue);
+        </script>
+		<script type="text/javascript">
+			$().ready(function() {
+				var elf = $('#elfinder').elfinder({
+					url: 'php/connector.php',
+					getFileCallback: function(file) {
+						FileBrowserDialogue.mySubmit(file);
+					}
+				}).elfinder('instance');      
+			});
+        </script>
+	</head>
+	<body>
+		<div id="elfinder"></div>
+	</body>
+</html>

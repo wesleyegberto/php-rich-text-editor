@@ -1,0 +1,45 @@
+<!-- required scripts -->
+<link rel="stylesheet" type="text/css" media="screen" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/themes/smoothness/jquery-ui.css">
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
+
+<link rel="stylesheet" type="text/css" media="screen" href="vendor/elfinder/css/elfinder.min.css">
+<link rel="stylesheet" type="text/css" media="screen" href="vendor/elfinder/css/theme.css">
+<script type="text/javascript" src="vendor/elfinder/js/elfinder.min.js"></script>
+
+<script type="text/javascript" src="vendor/tiny_mce/tiny_mce_popup.js"></script>
+
+<script type="text/javascript">
+	var FileBrowserDialogue = {
+		init: function() {
+		},
+		mySubmit: function (URL) {
+			var win = tinyMCEPopup.getWindowArg('window');
+			win.document.getElementById(tinyMCEPopup.getWindowArg('input')).value = URL;
+			if (typeof(win.ImageDialog) != 'undefined') {
+				if (win.ImageDialog.getImageData) {
+					win.ImageDialog.getImageData();
+				}
+				if (win.ImageDialog.showPreviewImage) {
+					win.ImageDialog.showPreviewImage(URL);
+				}
+			}
+			tinyMCEPopup.close();
+		}
+	}
+	// bind the Elfinder explorer to editor (to return the file selected)
+	tinyMCEPopup.onInit.add(FileBrowserDialogue.init, FileBrowserDialogue);
+</script>
+
+<script type="text/javascript">
+	$().ready(function() {
+		var elf = $('#elfinder').elfinder({
+			url: 'vendor/elfinder/php/connector.php', // path to connector.php
+			getFileCallback: function(file) {
+				FileBrowserDialogue.mySubmit(file);
+			}
+		}).elfinder('instance');      
+	});
+</script>
+</head>
+<div id="elfinder"></div>
