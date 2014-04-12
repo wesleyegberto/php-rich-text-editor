@@ -1,17 +1,18 @@
-Rich Text Editor in PHP
+> Rich Text Editor in PHP
 
 Project to integrate Tiny MCE editor with Elfinder file explorer.
 
 - Elfinder [1]
 - Tiny MCE [2]
 
-> editor.html
-Page with editor Tiny MCE
+editor.html
+- Page with editor Tiny MCE
 
-> vendor/elfinder/elfinder.html
-Page with Elfinder file explorer.
+elfinder_explorer.html
+- Page with Elfinder file explorer.
 
 Steps:
+
 1) editor.html
 . Import the correct files (jQuery.js, tiny_mce.js and elfinder.min.js)
 . Alter the URL of Elfinder Page Explorer in the callback function to Elfinder
@@ -30,4 +31,5 @@ Steps:
 
 
 [1] http://elfinder.org/
+
 [2] http://www.tinymce.com/
